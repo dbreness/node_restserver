@@ -1,23 +1,20 @@
 const mongoose = require('mongoose');
 
 const uniqueValidator = require('mongoose-unique-validator');
-
+// const { delete } = require('../routes/usuario');
 
 let rolesValidos = {
     values : ['ADMIN_ROLE','USER_ROLE'],
     message: '{VALUE} no es un rol valido'
-}
-
+};
 
 let Schema = mongoose.Schema;
 
 let usuarioSchema = new Schema({
-
     nombre: {
         type: String,
         required: [true, 'El nombre es requerido']
     },
-
     email:{
         type: String,
         unique: true,
@@ -43,12 +40,20 @@ let usuarioSchema = new Schema({
         type:Boolean,
         default: false
     }
-    
 });
 
+//Eliminar el password cada que se imprima el modelo del usuario
+usuarioSchema.methods.toJSON = function () {
+
+    let user = this;
+    let userObject = user.toObject();
+    delete userObject.password;
+
+    return userObject;
+};
+
+
+
 usuarioSchema.plugin(uniqueValidator, {message: '{PATH} debe de ser unico'});
-
-
-
 
 module.exports = mongoose.model('usuario', usuarioSchema);

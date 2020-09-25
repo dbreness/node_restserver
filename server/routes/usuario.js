@@ -9,7 +9,7 @@ const _ = require('underscore');
 
 
 app.get('/usuario', function (req, res) {
-
+    
     Usuario.find({estado : true})
     .exec((err, usuarios)=>{
 
@@ -24,7 +24,7 @@ app.get('/usuario', function (req, res) {
 
     });
 
-  });
+});
 
 app.post('/usuario', function (req, res) {
     
@@ -33,10 +33,11 @@ app.post('/usuario', function (req, res) {
     let usuario = new Usuario({
         nombre:body.nombre,
         email:body.email,
-        password: bcrypt.hashSync(body.password, 15),
+        password: bcrypt.hashSync(body.password, 13),
         role:body.role
     });
 
+    //Calback para guardar el nuevo usuario en BD
     usuario.save( (err, usuarioDB) => {
 
         if(err){
@@ -58,13 +59,11 @@ app.post('/usuario', function (req, res) {
 
 app.put('/usuario/:userId', function (req, res) {
 
-    let id = req.params.id;
+    let id = req.params.userId;
+    // _ permite por medio de la funcion pick seleccionar los elementos del objeto que se desean modificar
+    let user =  _.pick(req.body, ['nombre','email','img','role','estado'] ); 
 
-    // _ permite por medio de la funcion pick seleccionar los elementos del objeto q se desean modificar
-    let body =  _.pick(req.body, ['nombre','email','img','role','estado'] ); 
-
-
-    Usuario.findOneAndUpdate(id, body, {new : true, runValidators : true}, (err, usuarioDB) => {
+    Usuario.findOneAndUpdate(id, user, {new:true, runValidators:true}, (err, usuarioDB) => {
         
         if(err){
            return res.status(400).json({
@@ -82,11 +81,11 @@ app.put('/usuario/:userId', function (req, res) {
 app.delete('/usuario/:id', function (req, res) {
     
     let id = req.params.id;
-    let body =  {
+    let user =  {
         estado : false
     };
 
-    Usuario.findOneAndUpdate(id, body, {new : true}, (err, usuarioEliminado) => {
+    Usuario.findOneAndUpdate(id, user, {new : true}, (err, usuarioEliminado) => {
 
         if(err){
             return res.status(400).json({
