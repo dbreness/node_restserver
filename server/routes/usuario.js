@@ -2,13 +2,14 @@
 
 const express = require('express');
 const app = express();
-const Usuario = require('../models/usuario')
+const Usuario = require('../models/usuario');
+const { verifyToken, verifyRole } = require('../middlewares/autentication');
 
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
 
-app.get('/usuario', function (req, res) {
+app.get('/usuario', verifyToken, (req, res) => {
     
     Usuario.find({estado : true})
     .exec((err, usuarios)=>{
@@ -26,7 +27,7 @@ app.get('/usuario', function (req, res) {
 
 });
 
-app.post('/usuario', function (req, res) {
+app.post('/usuario', [verifyToken, verifyRole], (req, res) =>{
     
     let body = req.body;
 
@@ -57,7 +58,7 @@ app.post('/usuario', function (req, res) {
    
 });
 
-app.put('/usuario/:userId', function (req, res) {
+app.put('/usuario/:userId', [verifyToken, verifyRole], function (req, res) {
 
     let id = req.params.userId;
     // _ permite por medio de la funcion pick seleccionar los elementos del objeto que se desean modificar
@@ -78,7 +79,7 @@ app.put('/usuario/:userId', function (req, res) {
 
 });
 
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', [verifyToken, verifyRole], function (req, res) {
     
     let id = req.params.id;
     let user =  {

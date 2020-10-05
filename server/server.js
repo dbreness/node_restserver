@@ -13,8 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-//se importa y utiliza las rutas para usuario
-app.use(require('./routes/usuario'));
+//se importa y utiliza las rutas
+app.use(require('./routes/index'));
 
 
 mongoose.connect(process.env.URLBD, { useUnifiedTopology: true, useNewUrlParser : true, useCreateIndex : true }, (error, res) => {
