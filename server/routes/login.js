@@ -114,7 +114,7 @@ app.post('/google', async (req, res) =>{
                     return res.json({
                         ok: true,
                         user: userDB,
-                        token
+                        token,
                     });
                 } 
             } else{
@@ -155,11 +155,6 @@ app.post('/google', async (req, res) =>{
 
 
         });
-
-    res.json({
-        token
-    });
-
 
 
 })
