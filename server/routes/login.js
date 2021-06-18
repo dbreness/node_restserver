@@ -33,16 +33,13 @@ app.post('/login', (req, res) =>{
         }
 
         let ValidPassword = bcrypt.compareSync(body.password, userDB.password);
-        console.log(body.password)
-        console.log(userDB.password)
-        console.log(ValidPassword)
 
-        // if(!ValidPassword){
-        //     return res.status(400).json({
-        //         ok:false,
-        //         message: 'Password incorrecto'
-        //     });
-        // }
+        if(!ValidPassword){
+            return res.status(400).json({
+                ok:false,
+                message: 'Password incorrecto'
+            });
+        }
 
         let token = jwt.sign({
             user : userDB
