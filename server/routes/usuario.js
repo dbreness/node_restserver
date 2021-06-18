@@ -34,7 +34,7 @@ app.post('/usuario', [verifyToken, verifyRole], (req, res) =>{
     let usuario = new Usuario({
         nombre:body.nombre,
         email:body.email,
-        password: bcrypt.hashSync(body.password, 13),
+        password: bcrypt.hashSync(body.password, 10),
         role:body.role
     });
 

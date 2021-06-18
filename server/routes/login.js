@@ -124,7 +124,7 @@ app.post('/google', async (req, res) =>{
                     email: googleUser.email,
                     img: googleUser.img,
                     google: true,
-                    password: bcrypt.hashSync(":)", 13)
+                    password: bcrypt.hashSync(":)", 10)
                 });
 
                 usuario.save( (err, usuarioDB) => {
