@@ -33,13 +33,16 @@ app.post('/login', (req, res) =>{
         }
 
         let ValidPassword = bcrypt.compareSync(body.password, userDB.password);
+        console.log(body.password)
+        console.log(userDB.password)
+        console.log(ValidPassword)
 
-        if(!ValidPassword){
-            return res.status(400).json({
-                ok:false,
-                message: 'Password incorrecto'
-            });
-        }
+        // if(!ValidPassword){
+        //     return res.status(400).json({
+        //         ok:false,
+        //         message: 'Password incorrecto'
+        //     });
+        // }
 
         let token = jwt.sign({
             user : userDB
@@ -124,7 +127,7 @@ app.post('/google', async (req, res) =>{
                     email: googleUser.email,
                     img: googleUser.img,
                     google: true,
-                    password: ':)'
+                    password: bcrypt.hashSync(":)", 13)
                 });
 
                 usuario.save( (err, usuarioDB) => {

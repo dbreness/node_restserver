@@ -45,11 +45,10 @@ let usuarioSchema = new Schema({
 //Eliminar el password cada que se imprima el modelo del usuario
 usuarioSchema.methods.toJSON = function () {
 
-    let user = this;
-    let userObject = user.toObject();
-    delete userObject.password;
+    const {__v, password, _id, ...usuario} = this.toObject();
+    usuario.uid = _id
 
-    return userObject;
+    return usuario;
 };
 
 
