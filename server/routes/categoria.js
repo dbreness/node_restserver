@@ -50,7 +50,7 @@ app.post('/categoria', verifyToken, (req, res)=>{
 
     let categoria = new Categoria({
         descripcion: body.descripcion,
-        usuario: req.user._id
+        usuario: req.user.uid
     });
 
     categoria.save((err,categoriaBD)=>{
