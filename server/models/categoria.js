@@ -6,7 +6,7 @@ let categoriaSchema = new Schema({
     usuario: { type: Schema.Types.ObjectId, ref: 'Usuario' }
 });
 
-//Eliminar el password cada que se imprima el modelo del usuario
+
 categoriaSchema.methods.toJSON = function () {
 
     const {__v, _id, ...categoria} = this.toObject();

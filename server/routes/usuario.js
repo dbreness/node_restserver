@@ -9,6 +9,23 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
 
+app.get('/usuariobyid', verifyToken, (req, res) => {
+    
+    let body = req.body;
+    Usuario.findOne({email: body.email}, (err, userDB) =>{
+        
+        if(err){
+            return res.status(500).json({
+                 ok:false,
+                 err
+             });
+        }
+
+        res.json({usuarios: userDB});
+    });
+
+});
+
 app.get('/usuario', verifyToken, (req, res) => {
     
     Usuario.find({estado : true})
