@@ -10,18 +10,21 @@ const _ = require('underscore');
 
 
 app.get('/usuariobyid', verifyToken, (req, res) => {
-    
+
     let body = req.body;
-    Usuario.findOne({email: body.email}, (err, userDB) =>{
-        
+
+    Usuario.find({email: body.email})
+    .exec((err, usuarios)=>{
+
         if(err){
-            return res.status(500).json({
+            return res.status(400).json({
                  ok:false,
                  err
              });
         }
+    
+        res.json({usuarios});
 
-        res.json({usuarios: userDB});
     });
 });
 
