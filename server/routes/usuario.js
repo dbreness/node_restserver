@@ -23,7 +23,6 @@ app.get('/usuariobyid', verifyToken, (req, res) => {
 
         res.json({usuarios: userDB});
     });
-
 });
 
 app.get('/usuario', verifyToken, (req, res) => {
